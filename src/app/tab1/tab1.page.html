@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Artist Release Tracking
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,6 +12,45 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
-
+<!--
   <app-explore-container name="Tab 1 page"></app-explore-container>
+-->
+  <div class="container">
+    <div id="login" style="padding:3rem 1.5rem;text-align:center;" *ngIf="!loggedIn">
+      <a href="http://localhost:8888/login" class="btn btn-primary">Log in with Spotify</a>
+    </div>
+    <div id="loggedin" *ngIf="loggedIn">
+      <ng-container *ngIf="!selectedPlayable">
+        <ion-grid fixed>
+          <!--<ion-split-pane when="(min-width: 576px)"> -->
+            <ion-row [hidden]="platform.width() < 576">
+              <ion-col size="1"></ion-col>
+              <ion-col size="3" class="center font-bold">Artist</ion-col>
+              <ion-col size="4" class="center font-bold">Album</ion-col>
+              <ion-col size="2" class="center font-bold">Date</ion-col>
+              <ion-col size="2"></ion-col>
+            </ion-row>
+          <!--</ion-split-pane> -->
+          <ng-container *ngFor="let item of trackingData">
+            <ion-row>
+              <ion-col size-lg="1" size-md="1" size-sm="1" size="12" [hidden]="platform.width() < 576">&#9658;</ion-col>
+              <ion-col [hidden]="platform.width() >= 576" size="3" class="center font-bold">Artist</ion-col>
+              <ion-col size-lg="3" size-md="3" size-sm="3" size="9"
+              (click)="displayArtist(item)" (keyup.enter)="displayArtist(item)">{{item.artist}}</ion-col>
+              <ion-col [hidden]="platform.width() >= 576" size="3" class="center font-bold">Album</ion-col>
+              <ion-col size-lg="4" size-md="4" size-sm="4" size="9"
+              (click)="displayAlbum(item)" (keyup.enter)="displayAlbum(item)">{{item.album}}</ion-col>
+              <ion-col [hidden]="platform.width() >= 576" size="3" class="center font-bold">Date</ion-col>
+              <ion-col size-lg="2" size-md="2" size-sm="2" size="9" class="ion-text-md-center">
+                {{item.displayDate}}</ion-col>
+              <ion-col size-lg="2" size-md="2" size-sm="2" size="12" ></ion-col>
+            </ion-row>
+          </ng-container>
+        </ion-grid>
+      </ng-container>
+      <ng-container *ngIf="selectedPlayable && selectedPlayable.id && selectedPlayable.type">
+        <app-playable-display [playableId]="selectedPlayable.id" [playableType]="selectedPlayable.type"></app-playable-display>
+      </ng-container>
+    </div>
+  </div>
 </ion-content>

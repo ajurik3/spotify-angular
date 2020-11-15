@@ -6,14 +6,20 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
+import { HttpClientModule } from '@angular/common/http';
+import { CredentialsService } from '../services/credentials.service';
+import { UtilsService } from '../services/utils.service';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    HttpClientModule,
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage],
+  providers: [CredentialsService,
+              UtilsService]
 })
 export class TabsPageModule {}
